@@ -1,7 +1,4 @@
 ## Load libraries
-
-library(doParallel)
-library(foreach)
 library(raster)
 library(caret)
 
@@ -43,12 +40,6 @@ raster_preds <- stack()
 
 # Run the boostrapping
 
-UseCores <- detectCores() -1
-UseCores
-cl <- makeCluster(UseCores)
-registerDoParallel(cl)
-
-
 for(i in 1:k) {
   
   library(caret)
@@ -56,7 +47,7 @@ for(i in 1:k) {
   # Generate a bootstrap resample of dataset rows
   cal_rows <- sample(nrow(dat_train), nrow(dat_train), replace = TRUE)
   
-  # Set the grid search
+  # Set the grid search -- You can change this or set by default
   grid <- expand.grid(committees = 1, neighbors = 0)
   
   # Fit a Cubist Argila
@@ -74,11 +65,8 @@ for(i in 1:k) {
                           raster::predict(SYSI, fit_model))
 }
 
-gc()
 
-stopCluster(cl)
-
-summary(cubist_fit_boot$finalModel)
+summary(fit_model$finalModel)
 
 # Compute mean of bootstrap repetitions
 preds_mean <- raster::calc(raster_preds, mean)
@@ -87,9 +75,7 @@ plot(z_mean, main = "Bootstrapped Cubist Clay content")
 # Compute prediction interval limits (5 and 95%)
 preds_interval <- raster::calc(raster_preds, 
                            function(x) {
-                             quantile(x,
-                                      probs = c(0.05, 0.95),
-                                      na.rm = TRUE)
+                             quantile(x, probs = c(0.05, 0.95), na.rm = TRUE)
                            })
 names(preds_interval) <- c("lower_lim", "upper_lim")
 plot(preds_interval)
