@@ -1,6 +1,7 @@
 ## Load libraries
 library(raster)
 library(caret)
+library(ggplot2)
 
 ## Set working directory , list files and load dataset
 setwd("C:/Users/FREY/Documents")
