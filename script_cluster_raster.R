@@ -1,5 +1,10 @@
 ### Script for mapping clusters using raster maps
 
+## Load libraries
+library(raster)
+library(cluster)
+
+## Set directory
 dir.imagens.base <- "C:/Users"
 
 # Create a list with your raster names
