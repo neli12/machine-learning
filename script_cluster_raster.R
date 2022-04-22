@@ -31,6 +31,7 @@ plot(wss)
 
 ### Clustering
 # Use the clara function from cluster package. In this code, a sample of 1000 and the euclidean distance are used.
+# I used k=4, as example
 clus <- cluster::clara(data, k=4, metric = "euclidean", stand = TRUE, samples = 1000, pamLike = T)  
 summary(clus)
 
