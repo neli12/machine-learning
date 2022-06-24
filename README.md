@@ -1,4 +1,6 @@
-# Machine learning in R
+# Machine learning
+
+In this repository I describe some machine learning scripts with Python and R
 
 ## Datasets
 - `script_boostrapping_pi`: make k realizations to calculate the 90% prediction interval of several models. This can be use to represent the uncertainty associated with the model.
